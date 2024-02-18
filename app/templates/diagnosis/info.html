@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Información - Sistema Experto Canino</title>
+
+    <link href="/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="/static/css/sb-admin-2.min.css" rel="stylesheet">
+</head>
+<body class="d-flex flex-column">
+
+    <nav class="navbar navbar-expand navbar-light bg-primary topbar mb-4 static-top shadow">
+        <!-- Navbar Izquierda -->
+        <div class="navbar-nav mr-auto">
+            <span class="mr-2 d-none d-lg-inline text-white small"><h5>Bienvenido, {{ current_user.nombre_usuario }}</h5></span>
+        </div>
+    
+        <!-- Navbar Centro -->
+
+        <div class="navbar-nav mx-auto">
+            <a class="nav-link nav-link-custom text-white" href="/diagnosis/info">
+                <span class="mr-2 d-none d-lg-inline small"><strong>Diagnostico</strong></span>
+                <i class="fas fa-fw fa-stethoscope"></i>
+            </a>
+        </div>
+
+        <div class="navbar-nav mx-auto">
+            <a class="nav-link nav-link-custom text-white" href="/diagnosis/record">
+                <span class="mr-2 d-none d-lg-inline small"><strong>Historial</strong></span>
+                <i class="fas fa-book fa-sm"></i>
+            </a> 
+        </div>
+
+        <div class="navbar-nav mx-auto">
+            <a class="nav-link nav-link-custom text-white" href="/user/profile">
+                <span class="mr-2 d-none d-lg-inline small"><strong>Perfil del Usuario</strong></span>
+                <i class="fas fa-user fa-sm"></i>
+            </a>
+            
+        </div>
+    
+        <!-- Navbar Derecha -->
+        <ul class="navbar-nav ml-auto">
+            <!-- Nav Item - Cerrar Sesión -->
+            <li class="nav-item">
+                <a class="nav-link nav-link-custom text-white" href="/">
+                    <span class="mr-2 d-none d-lg-inline small"><strong>Cerrar sesión</strong></span>
+                    <i class="fas fa-sign-out-alt fa-sm"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    
+
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Sistema Experto para Diagnóstico Canino</h6>
+                    </div>
+                    <div class="card-body">
+                        <p>Este sistema es una herramienta de apoyo para el diagnóstico de enfermedades en perros, basado en los síntomas informados. Sin embargo, es importante aclarar que no sustituye la evaluación profesional de un veterinario. Su uso está destinado a ser un primer paso en la identificación de posibles condiciones médicas, y siempre se recomienda la confirmación y tratamiento por parte de un especialista en salud animal. A continuación, se muestra una lista de enfermedades que el sistema es capaz de identificar:</p>
+                        
+                        <h4>Enfermedades que el sistema puede diagnosticar:</h4>
+                        <ul>
+                            {% for enfermedad in enfermedades %}
+                            <li>{{ enfermedad.nombre }}</li>
+                            {% endfor %}
+                        </ul>
+
+                        <div class="custom-control custom-checkbox large">
+                            <input type="checkbox" class="custom-control-input" id="acceptTerms">
+                            <label class="custom-control-label" for="acceptTerms">Estoy de acuerdo.</label>
+                        </div>
+
+                        <center><button class="btn btn-primary mt-3" id="startDiagnosis" disabled>Comenzar Diagnóstico</button></center>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <!-- Bootstrap y SB Admin 2 JavaScript -->
+    <script src="/static/vendor/jquery/jquery.min.js"></script>
+    <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="/static/js/sb-admin-2.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#acceptTerms').change(function() {
+                if(this.checked) {
+                    $('#startDiagnosis').prop('disabled', false);
+                } else {
+                    $('#startDiagnosis').prop('disabled', true);
+                }
+            });
+
+            $('#startDiagnosis').click(function() {
+                window.location.href = '/diagnosis/select_pet'; // Ajusta este enlace según corresponda
+            });
+        });
+    </script>
+
+</body>
+</html>

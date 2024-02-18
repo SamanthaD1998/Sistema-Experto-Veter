@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ingresar Síntomas - Sistema Experto Canino</title>
+
+    <link href="/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="/static/css/sb-admin-2.min.css" rel="stylesheet">
+</head>
+<body class="d-flex flex-column">
+    <nav class="navbar navbar-expand navbar-light bg-primary topbar mb-4 static-top shadow">
+        <!-- Navbar Izquierda -->
+        <div class="navbar-nav mr-auto">
+            <span class="mr-2 d-none d-lg-inline text-white small"><h5>Bienvenido, {{ current_user.nombre_usuario }}</h5></span>
+        </div>
+    
+        <!-- Navbar Centro -->
+
+        <div class="navbar-nav mx-auto">
+            <a class="nav-link nav-link-custom text-white" href="/diagnosis/select_pet">
+                <span class="mr-2 d-none d-lg-inline small"><strong>Diagnostico</strong></span>
+                <i class="fas fa-fw fa-stethoscope"></i>
+            </a>
+        </div>
+
+        <div class="navbar-nav mx-auto">
+            <a class="nav-link nav-link-custom text-white" href="/diagnosis/record">
+                <span class="mr-2 d-none d-lg-inline small"><strong>Historial</strong></span>
+                <i class="fas fa-book fa-sm"></i>
+            </a> 
+        </div>
+
+        <div class="navbar-nav mx-auto">
+            <a class="nav-link nav-link-custom text-white" href="/user/profile">
+                <span class="mr-2 d-none d-lg-inline small"><strong>Perfil del Usuario</strong></span>
+                <i class="fas fa-user fa-sm"></i>
+            </a>
+            
+        </div>
+    
+        <!-- Navbar Derecha -->
+        <ul class="navbar-nav ml-auto">
+            <!-- Nav Item - Cerrar Sesión -->
+            <li class="nav-item">
+                <a class="nav-link nav-link-custom text-white" href="/">
+                    <span class="mr-2 d-none d-lg-inline small"><strong>Cerrar sesión</strong></span>
+                    <i class="fas fa-sign-out-alt fa-sm"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    
+    
+    <div class="container">
+
+<!-- Botón de Cerrar Sesión -->
+
+        <!-- Encabezado -->
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="text-center mt-5">
+                    <h1 class="h4 text-gray-900 mb-4">Seleccionar Síntomas</h1>
+                </div>
+            </div>
+        </div>
+
+<!-- Barra de Progreso -->
+<div class="progress mb-4">
+    <div class="progress-bar bg-transparent" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">2 de 2</div>
+</div>
+
+
+
+
+        <!-- Formulario de Síntomas -->
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-5">
+                        <!-- Contenido del formulario -->
+
+                        <form action="{{ url_for('diagnosis.enter_symptoms_view') }}" method="post">
+                            <p class="mb-4">Selecciona los síntomas que presenta tu perro para obtener un diagnóstico:</p>
+                            <div>
+                                {% for sintoma in sintomas %}
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="{{ sintoma.nombre }}" name="{{ sintoma.nombre }}" value="on">
+                                        <label class="form-check-label" for="{{ sintoma.nombre }}">{{ sintoma.nombre }}</label>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <input type="submit" class="btn btn-primary btn-user btn-block mt-4" value="Diagnosticar">
+                        </form>                    
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal para mensajes de alerta -->
+        <div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="alertModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="alertModalLabel">Alerta</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                <!-- El mensaje se insertará aquí desde JavaScript -->
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
+                </div>
+            </div>
+            </div>
+        </div>
+
+
+        <!-- Footer -->
+        <div class="row">
+            <div class="col-lg-12">
+               
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Bootstrap y SB Admin 2 JavaScript -->
+    <script src="/static/vendor/jquery/jquery.min.js"></script>
+    <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="/static/js/sb-admin-2.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var mensajeError = "{{ mensaje_error|safe }}";
+            if (mensajeError && mensajeError !== 'None') {  // Verifica que haya un mensaje y no sea 'None'
+                $('#alertModal .modal-body').text(mensajeError);
+                $('#alertModal').modal('show');
+            }
+        });
+        
+        
+     </script>
+
+
+</body>
+</html>

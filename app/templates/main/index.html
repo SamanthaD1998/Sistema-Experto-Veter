@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Bienvenido a DOG DIALOG - Tu asistente para el diagnóstico de enfermedades caninas">
+    <meta name="author" content="">
+
+    <title>DOG DIALOG - Inicio</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="/static/css/sb-admin-2.min.css" rel="stylesheet">
+    <style>
+        /* Estilos personalizados para el encabezado y el logo */
+        .navbar {
+            align-items: center; /* Alinea verticalmente los elementos del encabezado */
+        }
+
+        .navbar-brand {
+            flex-grow: 1;
+            display: flex; /* Permite alinear el logo verticalmente */
+            align-items: center; /* Alineación vertical */
+        }
+
+        .navbar-brand img {
+            height: 150px; /* Altura del logo */
+            width: auto; /* Mantiene la proporción del logo */
+        }
+
+        .navbar-nav {
+            flex-grow: 1;
+            justify-content: flex-end; /* Alinea el enlace a la derecha */
+        }
+        
+        .img-desplazada {
+        margin-left: 10px; /* Desplaza la imagen 20px a la derecha */
+        display: block;
+        }
+        nav .nav-item .nav-link-custom {
+        color: #007bff !important; /* Azul */
+    }
+
+    nav .nav-item .nav-link-custom:hover {
+        color: #0056b3 !important; /* Azul más oscuro para hover */
+    }
+
+    .navbar-brand h1 {
+    color: #4e73df; /* Color azul */
+    font-size: 24px; /* Tamaño de fuente, ajusta según necesites */
+}
+.nav-link-custom {
+    font-size: 20px; /* Tamaño de fuente, ajusta según necesites */
+}
+
+/* Ajustes para flexbox y estilo de los cuadros */
+.card-body {
+    display: flex; /* Habilita flexbox */
+    align-items: center; /* Centra los elementos verticalmente */
+    margin-right: 20px;
+}
+
+.img-fluid {
+    max-width: 40%; /* Limita el ancho máximo de la imagen */
+    margin-right: 20px; /* Añade espacio entre la imagen y el texto */
+}
+
+
+    </style>
+</head>
+
+<body id="page-top">
+<!-- Page Wrapper -->
+<div id="wrapper">
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Main Content -->
+        <div id="content">
+            <!-- Topbar --><br><br>
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <!-- Logo en el Encabezado -->
+                <a class="navbar-brand" href="/">
+                    <img src="/static/img/logoadmin3.png" alt="DOG DIALOG Logo" class="img-desplazada">
+                    <h2 class="img-desplazada" class="h3 mb-0 text-blue-800">DOG DIALOG</h2>
+                </a>
+                <!-- Topbar Navbar -->
+                <ul class="navbar-nav">
+                    <!-- Nav Item - Login Button -->
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-custom" href="{{ url_for('auth.login') }}">
+                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">Iniciar sesión</span>
+                            <i class="fas fa-sign-in-alt fa-sm"></i>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+                    <!-- Page Heading --><br><br>
+                    <!-- Introducción a DOG DIALOG -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Bienvenido a DOG DIALOG</h6>
+    </div>
+    <div class="card-body">
+        <p style="text-align: justify;">DOG DIALOG es un asistente digital avanzado diseñado para ayudarte a comprender y manejar mejor la salud de tu canino. Utilizando un enfoque basado en síntomas, nuestro sistema experto te proporcionará un diagnóstico preliminar, ayudándote a tomar decisiones informadas sobre el cuidado de tu mascota.</p>
+    </div>
+</div>
+
+<!-- Contenedor Principal -->
+<div class="container-fluid">
+    <div class="row justify-content-center">
+
+        <!-- Cuadro 1: Apoyo de CRIAR -->
+        <div class="col-lg-6 col-md-12 mb-4"> <!-- Ajustado el tamaño para mejor visualización -->
+            <div class="card shadow h-100">
+                <div class="card-body d-flex flex-row"> <!-- Modificado para flexbox -->
+                    <img src="/static/img/LOGOCRIAR.jpeg" alt="Centro de Rescate Integral Animal de Riobamba" class="img-fluid" style="max-width: 40%; margin-right: 20px;"> <!-- Ajustes de estilo en la imagen -->
+                    <div>
+                        <h5 class="card-title">Apoyo de CRIAR</h5>
+                        <p class="card-text" style="text-align: justify;">La aplicación DOG DIALOG fue desarrollada con el apoyo del Centro de Rescate Integral Animal de Riobamba (CRIAR), enfocándonos en mejorar el bienestar y la salud de los caninos. Agradecemos a CRIAR por su colaboración y apoyo en este proyecto.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cuadro 2: Guía de Uso DOG DIALOG -->
+        <div class="col-lg-6 col-md-12 mb-4"> <!-- Ajustado el tamaño para mejor visualización -->
+            <div class="card shadow h-100">
+                <div class="card-body d-flex flex-row"> <!-- Modificado para flexbox -->
+                    <img src="/static/img/LOGOCOMO.png" alt="Guía de Uso DOG DIALOG" class="img-fluid" style="max-width: 40%; margin-right: 20px;"> <!-- Ajustes de estilo en la imagen -->
+                    <div>
+                        <h5 class="card-title">Cómo utilizar DOG DIALOG</h5>
+                        <ul>
+                            <li>Regístrate e inicia sesión.</li>
+                            <li>Selecciona tu mascota.</li>
+                            <li>Ingresa los síntomas que presenta.</li>
+                            <li>Obtén un diagnóstico preliminar.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+                </div>
+                <!-- End of Page Content -->
+            </div>
+            <!-- End of Main Content -->
+        </div>
+        <!-- End of Content Wrapper -->
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="/static/vendor/jquery/jquery.min.js"></script>
+    <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/static/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/static/js/sb-admin-2.min.js"></script>
+</body>
+</html>

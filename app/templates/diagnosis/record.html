@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial - Sistema Experto Canino</title>
+
+    <link href="/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="/static/css/sb-admin-2.min.css" rel="stylesheet">
+</head>
+<body class="d-flex flex-column">
+    <nav class="navbar navbar-expand navbar-light bg-primary topbar mb-4 static-top shadow">
+        <!-- Navbar Izquierda -->
+        <div class="navbar-nav mr-auto">
+            <span class="mr-2 d-none d-lg-inline text-white small"><h5>Bienvenido, {{ current_user.nombre_usuario }}</h5></span>
+        </div>
+    
+        <!-- Navbar Centro -->
+
+        <div class="navbar-nav mx-auto">
+            <a class="nav-link nav-link-custom text-white" href="/diagnosis/select_pet">
+                <span class="mr-2 d-none d-lg-inline small"><strong>Diagnostico</strong></span>
+                <i class="fas fa-fw fa-stethoscope"></i>
+            </a>
+        </div>
+
+        <div class="navbar-nav mx-auto">
+            <a class="nav-link nav-link-custom text-white" href="/diagnosis/record">
+                <span class="mr-2 d-none d-lg-inline small"><strong>Historial</strong></span>
+                <i class="fas fa-book fa-sm"></i>
+            </a> 
+        </div>
+
+        <div class="navbar-nav mx-auto">
+            <a class="nav-link nav-link-custom text-white" href="/user/profile">
+                <span class="mr-2 d-none d-lg-inline small"><strong>Perfil del Usuario</strong></span>
+                <i class="fas fa-user fa-sm"></i>
+            </a>
+            
+        </div>
+    
+        <!-- Navbar Derecha -->
+        <ul class="navbar-nav ml-auto">
+            <!-- Nav Item - Cerrar Sesión -->
+            <li class="nav-item">
+                <a class="nav-link nav-link-custom text-white" href="/">
+                    <span class="mr-2 d-none d-lg-inline small"><strong>Cerrar sesión</strong></span>
+                    <i class="fas fa-sign-out-alt fa-sm"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    
+    
+    <div class="container">
+
+<!-- Botón de Cerrar Sesión -->
+
+<div class="container">
+    <h1 class="my-4">Historial de Diagnósticos</h1>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Mascota</th>
+                    <th>Enfermedad</th>
+                    <th>Probabilidad</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for diagnostico in diagnosticos %}
+                <tr>
+                    <td>{{ diagnostico.fecha_creacion.strftime('%d/%m/%Y %H:%M') }}</td>
+                    <td>{{ diagnostico.mascota.nombre if diagnostico.mascota else 'No especificada' }}</td> <!-- Muestra el nombre de la mascota -->
+                    <td>{{ diagnostico.enfermedad.nombre if diagnostico.enfermedad else 'Desconocida' }}</td>
+                    <td>{{ diagnostico.porcentaje }}%</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="3">No hay diagnósticos registrados</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+    </div>
+
+    <!-- Bootstrap y SB Admin 2 JavaScript -->
+    <script src="/static/vendor/jquery/jquery.min.js"></script>
+    <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="/static/js/sb-admin-2.min.js"></script>
+</body>
+</html>

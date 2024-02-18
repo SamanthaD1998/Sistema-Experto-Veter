@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados del Diagnóstico - Sistema Experto Canino</title>
+
+    <link href="/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="/static/css/sb-admin-2.min.css" rel="stylesheet">
+
+    <style>
+        .bg-gradient-success {
+            background: linear-gradient(180deg, #FFFFFF 10%, #4e73df 150%);
+            background-size: cover;
+        }
+
+        .text-same-as-bg-success {
+        color:#4e73df;
+    }
+    </style>
+
+</head>
+<body class="bg-gradient-success">
+        <nav class="navbar navbar-expand navbar-light bg-primary topbar mb-4 static-top shadow">
+            <!-- Navbar Izquierda -->
+            <div class="navbar-nav mr-auto">
+                <span class="mr-2 d-none d-lg-inline text-same-as-bg-success small"><h5>Bienv, {{ current_user.nombre_usuario }}</h5></span>
+            </div>
+        
+            <!-- Navbar Centro -->
+    
+            <div class="navbar-nav mx-auto">
+                <a class="nav-link nav-link-custom text-white" href="/diagnosis/select_pet">
+                    <span class="mr-2 d-none d-lg-inline small"><strong>Nuevo Diagnostico</strong></span>
+                    <i class="fas fa-fw fa-stethoscope"></i>
+                </a>
+            </div>
+
+            <div class="navbar-nav mx-auto">
+                <a class="nav-link nav-link-custom text-white" href="/diagnosis/record">
+                    <span class="mr-2 d-none d-lg-inline small"><strong>Historial</strong></span>
+                    <i class="fas fa-book fa-sm"></i>
+                </a> 
+            </div>
+    
+           
+            <div class="navbar-nav mx-auto">
+                <a class="nav-link nav-link-custom text-white" href="/user/profile">
+                    <span class="mr-2 d-none d-lg-inline small"><strong>Perfil del Usuario</strong></span>
+                    <i class="fas fa-user fa-sm"></i>
+                </a> 
+            </div>
+        
+            <!-- Navbar Derecha -->
+            <ul class="navbar-nav ml-auto">
+                <!-- Nav Item - Cerrar Sesión -->
+                <li class="nav-item">
+                    <a class="nav-link nav-link-custom text-white" href="/">
+                        <span class="mr-2 d-none d-lg-inline small"><strong>Cerrar sesión</strong></span>
+                        <i class="fas fa-sign-out-alt fa-sm"></i>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Navegación -->
+    <div class="container">
+
+        <!-- Encabezado -->
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="text-center mt-5">
+                    <h2 class="text-gray-900">Resultado del Diagnóstico Canino</h2>
+                </div>
+            </div>
+        </div>
+        <!-- Contenido Principal -->
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-5">
+                        <!-- Resultados del Diagnóstico -->
+                        <center><h3 class="text-gray-900">Diagnóstico basado en los síntomas ingresados</h3></center>
+                        {% if enfermedad == "No se pudo determinar un diagnóstico específico basado en los síntomas ingresados. Recomendamos consultar a un veterinario para asegurar el bienestar de tu mascota." %}
+                            <!-- Mostrar solo el mensaje de diagnóstico no determinado -->
+                            <center><h3><p class="mb-3">{{ enfermedad }}</p></h3></center>
+                        {% else %}
+                            <!-- Mostrar el diagnóstico determinado con la posible enfermedad y la probabilidad -->
+                            <center><h3><p class="mb-3">Posible enfermedad: {{ enfermedad }}</p></h3></center>
+                            {% if probabilidad %}
+                                <center><h3><p> ({{ probabilidad }}</p></h3></center>
+                            {% endif %}
+                        {% endif %}
+                        
+                        {% if enfermedad == "No se pudo determinar un diagnóstico específico basado en los síntomas ingresados. Recomendamos consultar a un veterinario para asegurar el bienestar de tu mascota." %}
+                        <div class="text-left">
+                            <a href="#" data-toggle="modal" data-target="#diagnosticoAlternativoModal">Ver posibles enfermedades con probabilidad baja</a>
+                        </div>
+                        {% endif %}
+
+                </div>               
+            </div>
+        </div>
+
+        <!-- Nuevo Modal para Síntomas -->
+<!-- Modal para el diagnóstico alternativo -->
+<div class="modal fade" id="diagnosticoAlternativoModal" tabindex="-1" aria-labelledby="diagnosticoAlternativoModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="diagnosticoAlternativoModalLabel">Posibles enfermedades con probabilidad baja</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="form-rediagnosticar" method="POST" action="{{ url_for('diagnosis.re_diagnosticar') }}">
+                        <div class="modal-body">
+                            {% for diagnostico in diagnosticos_alternativos %}
+                                <p><strong>{{ diagnostico.enfermedad }} ({{ diagnostico.probabilidad }}%)</strong></p>
+                                <p>Síntomas asociados:</p>
+                                {% for sintoma in diagnostico.sintomas %}
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="sintoma_{{ sintoma.nombre }}" value="on" id="sintoma-{{ loop.index }}"
+                                        {% if sintoma.seleccionado %} checked {% endif %}>
+                                        <label class="form-check-label" for="sintoma-{{ loop.index }}">
+                                            {{ sintoma.nombre }}
+                                        </label>
+                                    </div>
+                                {% endfor %}
+                            {% endfor %}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Re-Diagnosticar</button>
+                        </div>
+                    </form>
+            </div>
+
+            
+        </div>
+    </div>
+</div>
+        
+
+    </div>
+
+    <!-- Bootstrap y SB Admin 2 JavaScript -->
+    <script src="/static/vendor/jquery/jquery.min.js"></script>
+    <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="/static/js/sb-admin-2.min.js"></script>
+</body>
+</html>
+

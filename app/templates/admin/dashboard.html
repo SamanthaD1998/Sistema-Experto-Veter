@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración</title>
+    <link href="/static/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+
+
+    <!-- Custom styles for this template-->
+    <link href="/static/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet">
+
+</head>
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ url_for('admin.dashboard_view') }}">
+                <div class="sidebar-brand-icon rotate-n-15">
+                </div>
+                <div class="sidebar-brand-icon">
+                    <img src="/static/img/logoadmin3.png" alt="Logo" height="60"> <!-- Ajusta la ruta del logo y el tamaño según sea necesario -->
+                </div>
+                <div class="sidebar-brand-text mx-3">Admin</div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ url_for('admin.dashboard_view') }}">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Panel</span>
+                </a>                
+            </li>
+
+            <!-- Nav Item - Gestionar Enfermedades -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('admin.manage_diseases_view') }}">
+                    <i class="fas fa-fw fa-stethoscope"></i>
+                    <span>Gestionar Enfermedades</span>
+                </a>
+            </li>
+
+
+            <!-- Nav Item - Gestionar Usuarios -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('admin.manage_users_view') }}">
+                    <i class="fas fa-fw fa-users"></i>
+                    <span>Gestionar Usuarios</span>
+                </a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+        </ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+
+                        <div class="topbar-divider d-none d-sm-block"></div>
+
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ current_user.nombre_usuario }}</span>
+                                <img class="img-profile rounded-circle" src="/static/img/undraw_profile.svg">
+                            </a>
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="{{ url_for('admin.profile_admin_view') }}">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Perfil
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{{ url_for('admin.login_admin') }}">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Cerrar Sesión
+                                </a>
+                            </div>
+                        </li>
+
+
+                    </ul>
+
+                </nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Panel</h1>
+                        <div class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm dropdown">
+                            <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm dropdown-toggle" type="button" id="dropdownReportMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-download fa-sm text-white-50"></i> Generar Reportes
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownReportMenuButton">
+                                <a class="dropdown-item" href="{{ url_for('admin.generate_report') }}">Reporte de Usuarios</a>
+                                <a class="dropdown-item" href="{{ url_for('admin.generate_diagnostics_report') }}">Reporte de Diagnósticos</a>
+
+                            </div>
+                        </div>                      
+                    </div>
+                    <!-- Content Row -->
+                    <div class="row">
+                    </div>
+                    <!-- Content Row -->
+                    <div class="row">
+
+                        <!-- Area Chart -->
+                        <div class="col-xl-7 col-lg-7">
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Dropdown -->
+                                <div
+                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Usuarios Registrados</h6>
+                                    <div class="dropdown no-arrow">
+
+                                    </div>
+                                </div>
+                                <!-- Card Body -->
+                                <div class="card-body">
+                                    <div class="chart-area">
+                                        <canvas id="usuariosRegistradosChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pie Chart -->
+                        <div class="col-xl-5 col-lg-4">
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Dropdown -->
+                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Diagnosticos Realizados</h6>
+                                    <div class="dropdown no-arrow">
+                                        <!-- Dropdown o controles adicionales aquí -->
+                                    </div>
+                                </div>
+                                <!-- Card Body -->
+                                <div class="card-body">
+                                    <div class="chart-pie pt-1 pb-1">
+                                        <canvas id="diagnosticosRealizadosChart"></canvas>
+                                    </div>
+                                    <div>
+                                        <h6> <br> </h6>
+                                    </div>
+                                    <!-- Div para el total de diagnósticos -->
+                                    <!-- Div para el total de diagnósticos -->
+                                    <div id="totalDiagnosticos" class="mt-3 text-center">
+                                        <h5>Total de Diagnósticos: <span id="cantidadTotalDiagnosticos"></span></h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="flash-messages" style="display:none;">
+                            {% for category, message in get_flashed_messages(with_categories=true) %}
+                              <div data-category="{{ category }}" data-message="{{ message }}"></div>
+                            {% endfor %}
+                          </div>
+                    </div>
+
+                    <!-- Content Row -->
+                    
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; 2023</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="/static/vendor/jquery/jquery.min.js"></script>
+    <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/static/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/static/js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="/static/vendor/chart.js/Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="/static/js/demo/chart-area-demo.js"></script>
+    <script src="/static/js/demo/chart-pie-demo.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+    // Parsea la cadena JSON de usuarios_por_mes a un objeto JavaScript
+    const datosUsuarios = JSON.parse('{{ usuarios_por_mes_json | safe }}');
+
+    // Extrae las etiquetas (meses) y los datos (cantidad de usuarios)
+    const etiquetas = datosUsuarios.map(dato => dato.mes);
+    const datos = datosUsuarios.map(dato => dato.cantidad);
+
+    const ctx = document.getElementById('usuariosRegistradosChart').getContext('2d');
+    const usuariosRegistradosChart = new Chart(ctx, {
+        type: 'line',  // Tipo de gráfico
+        data: {
+            labels: etiquetas,
+            datasets: [{
+                label: 'Usuarios Registrados',
+                data: datos,
+                fill: true,
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                tension: 0.1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true, // Asegura que la escala comience en 0
+                    ticks: {
+                        stepSize: 1 // Incrementos de 1 en 1
+                    }
+                }
+            }
+            
+        }
+
+    });
+});
+
+    </script>
+
+<script>
+    function generarColor() {
+        var rojo = Math.floor(Math.random() * 255);
+        var verde = Math.floor(Math.random() * 255);
+        var azul = Math.floor(Math.random() * 255);
+        return 'rgba(' + rojo + ', ' + verde + ', ' + azul + ', 0.5)';
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const datosDiagnostico = JSON.parse('{{ diagnosticos_por_enfermedad_json | safe }}');
+
+        const etiquetasDiagnostico = datosDiagnostico.map(dato => dato.enfermedad);
+        const datosCantidad = datosDiagnostico.map(dato => dato.cantidad);
+        const coloresFondo = datosCantidad.map(() => generarColor());
+
+        const totalDiagnosticos = datosCantidad.reduce((total, cantidad) => total + cantidad, 0);
+
+        document.getElementById('cantidadTotalDiagnosticos').textContent = totalDiagnosticos;
+
+        const ctxDiagnostico = document.getElementById('diagnosticosRealizadosChart').getContext('2d');
+        const diagnosticosRealizadosChart = new Chart(ctxDiagnostico, {
+            type: 'pie',
+            data: {
+                labels: etiquetasDiagnostico,
+                datasets: [{
+                    label: 'Diagnósticos por Enfermedad',
+                    data: datosCantidad,
+                    backgroundColor: coloresFondo,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const value = context.raw;
+                                const percentage = ((value / totalDiagnosticos) * 100).toFixed(2);
+                                return `Número de Diagnósticos: ${value} (${percentage}%)`;
+                            }
+                        }
+                    }
+                },
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var messagesContainer = document.getElementById('flash-messages');
+      var messages = messagesContainer.querySelectorAll('div');
+      var messageText = '';
+      messages.forEach(function(msg) {
+        messageText += msg.dataset.message + ' ';
+      });
+  
+      if (messageText) {
+        alert(messageText);  // O muestra el mensaje en un modal o elemento de tu elección
+      }
+    });
+  </script>
+
+
+
+</body>
+</html>

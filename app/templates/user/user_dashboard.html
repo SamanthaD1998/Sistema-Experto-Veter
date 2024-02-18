@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- Tus etiquetas meta y enlaces a hojas de estilo aquí -->
+    <title>Panel del Usuario - Sistema Experto Canino</title>
+    <!-- Bootstrap y SB Admin 2 CSS -->
+    <link href="/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="/static/css/sb-admin-2.min.css" rel="stylesheet">
+</head>
+<body class="d-flex flex-column">
+
+    <!-- Navbar de SB Admin 2 -->
+    <nav class="navbar navbar-expand navbar-light bg-primary topbar mb-4 static-top shadow">
+        <!-- Contenido de Navbar similar al que ya tienes -->
+    </nav>
+    
+    <!-- Contenedor Principal -->
+    <div class="container-fluid">
+        <!-- Encabezado del Panel del Usuario -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Panel del Usuario</h1>
+        </div>
+
+        <!-- Información del Usuario -->
+        <div class="row">
+            <div class="col-lg-12 mb-4">
+                <!-- Aquí puedes agregar tarjetas o elementos del dashboard de SB Admin 2 -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Bienvenido, [nombre del usuario]</h6>
+                    </div>
+                    <div class="card-body">
+                        <p>Desde aquí puedes gestionar tus actividades y acceder a las principales funciones:</p>
+                        <ul class="list-unstyled">
+                            <li><a href="/diagnosis/enter_symptoms">Realizar un nuevo diagnóstico</a></li>
+                            <li><a href="/user/history">Ver historial de diagnósticos</a></li>
+                            <li><a href="/user/profile">Actualizar información de perfil</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección de Últimos Diagnósticos -->
+        <div class="row">
+            <div class="col-lg-12 mb-4">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Últimos Diagnósticos</h6>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled">
+                            <!-- Bucle de diagnósticos -->
+                            <li>Diagnóstico del [fecha]: [nombre de la enfermedad]</li>
+                            <!-- Fin del bucle -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Aquí podrías incluir más contenido o secciones -->
+    </div>
+
+    <!-- Footer -->
+    <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+            <div class="text-center my-auto">
+                <span>Sistema Experto Canino &copy; 2023</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts de Bootstrap y SB Admin 2 -->
+    <script src="/static/vendor/jquery/jquery.min.js"></script>
+    <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="/static/js/sb-admin-2.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+
+
+.bg-admin-login-image {
+    background: url('/static/img/imagen-admin.avif') no-repeat center center;
+    background-size: cover;
+}
+
+.card-body .chart-area {
+    width: auto; /* Asegura que el área del gráfico ocupe todo el ancho del card-body */
+    height: auto; /* Establece una altura fija para el área del gráfico */
+}
+
+.card-body .chart-area canvas {
+    width: auto!important; /* Hace que el canvas ocupe todo el ancho de .chart-area */
+    height: auto !important; /* Mantiene la altura fija del canvas para que coincida con .chart-area */
+}
+
+/* Estiliza el contenedor del gráfico de diagnósticos */
+.card-body .chart-pie {
+    width: auto; /* Asegura que el área del gráfico ocupe todo el ancho del card-body */
+    height: auto; /* Puedes establecer una altura fija o auto si quieres que se ajuste */
+}
+
+/* Estiliza el canvas del gráfico de diagnósticos */
+.card-body .chart-pie canvas {
+    width: auto!important; /* Hace que el canvas ocupe todo el ancho de .chart-pie */
+    height: auto !important; /* Ajusta la altura del canvas para que coincida con .chart-pie, puedes usar un valor fijo si lo prefieres */
+}
+
+.chart-pie {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 1000px; 
+}
+

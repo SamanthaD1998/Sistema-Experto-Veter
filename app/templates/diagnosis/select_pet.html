@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seleccionar Mascota - Sistema Experto Canino</title>
+
+    <link href="/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="/static/css/sb-admin-2.min.css" rel="stylesheet">
+</head>
+<body class="d-flex flex-column">
+    <nav class="navbar navbar-expand navbar-light bg-primary topbar mb-4 static-top shadow">
+        <!-- Navbar Izquierda -->
+        <div class="navbar-nav mr-auto">
+            <span class="mr-2 d-none d-lg-inline text-white small"><h5>Bienvenido, {{ current_user.nombre_usuario }}</h5></span>
+        </div>
+    
+        <!-- Navbar Centro -->
+
+        <div class="navbar-nav mx-auto">
+            <a class="nav-link nav-link-custom text-white" href="/diagnosis/select_pet">
+                <span class="mr-2 d-none d-lg-inline small"><strong>Diagnostico</strong></span>
+                <i class="fas fa-fw fa-stethoscope"></i>
+            </a>
+        </div>
+
+        <div class="navbar-nav mx-auto">
+            <a class="nav-link nav-link-custom text-white" href="/diagnosis/record">
+                <span class="mr-2 d-none d-lg-inline small"><strong>Historial</strong></span>
+                <i class="fas fa-book fa-sm"></i>
+            </a> 
+        </div>
+
+        <div class="navbar-nav mx-auto">
+            <a class="nav-link nav-link-custom text-white" href="/user/profile">
+                <span class="mr-2 d-none d-lg-inline small"><strong>Perfil del Usuario</strong></span>
+                <i class="fas fa-user fa-sm"></i>
+            </a>
+            
+        </div>
+    
+        <!-- Navbar Derecha -->
+        <ul class="navbar-nav ml-auto">
+            <!-- Nav Item - Cerrar Sesión -->
+            <li class="nav-item">
+                <a class="nav-link nav-link-custom text-white" href="/">
+                    <span class="mr-2 d-none d-lg-inline small"><strong>Cerrar sesión</strong></span>
+                    <i class="fas fa-sign-out-alt fa-sm"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    
+    <div class="container">
+
+        <!-- Encabezado -->
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="text-center mt-5">
+                    <h1 class="h4 text-gray-900 mb-4">Seleccionar Mascota</h1>
+                </div>
+            </div>
+        </div>
+        <!-- Proceso de selección -->
+        <div class="progress mb-4">
+            <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">1 de 2</div>
+        </div>
+
+        <!-- Formulario para seleccionar mascota -->
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <form id="formRegistroMascota" action="{{ url_for('diagnosis.select_pet_view') }}" method="POST">
+                    <div class="form-group">
+                        <label for="mascotaSeleccionada">Selecciona tu mascota:</label>
+                        <select class="form-control" id="mascotaSeleccionada" name="mascotaSeleccionada">
+                            <option value="" disabled selected>Selecciona mascota</option>
+                            {% for mascota in mascotas %}
+                                <option value="{{ mascota.id }}">{{ mascota.nombre }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary float-right" id="botonContinuar">Continuar <i class="fas fa-arrow-right"></i></button>
+
+                </form>
+                <!-- Botón para abrir modal de registro de nueva mascota -->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalRegistroMascota">
+                    Añadir Nueva Mascota <i class="fas fa-fw fa-plus"></i>
+                </button>
+                
+            </div>
+        </div>
+
+        <!-- Modal para registrar nueva mascota -->
+        <div class="modal fade" id="modalRegistroMascota" tabindex="-1" role="dialog" aria-labelledby="modalRegistroMascotaLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalRegistroMascotaLabel">Registrar Nueva Mascota</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="formRegistroMascotaModal" action="{{ url_for('diagnosis.select_pet_view') }}" method="post">
+                            <div class="form-group">
+                                <label for="nombreMascota">Nombre de la mascota:</label>
+                                <input type="text" class="form-control" id="nombreMascota" name="nombreMascota" required>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                <input href="" type="submit" class="btn btn-primary" value="Registrar">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal de Éxito para Registro de Mascota -->
+        <div class="modal fade" id="successModalPet" tabindex="-1" role="dialog" aria-labelledby="successModalPetLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="successModalPetLabel">Registro Exitoso</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- El mensaje de éxito se establecerá mediante JavaScript -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        <!-- Modal de Error -->
+        <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="errorModalLabel">Error</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- El mensaje de error se establecerá mediante JavaScript -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<!-- Modal de Error -->
+<div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="errorModalLabel">Error</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Por favor, selecciona una mascota o registra una nueva.
+            </div>
+            
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+        <!-- Footer -->
+        <div class="row">
+            <div class="col-lg-12">
+               
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Bootstrap y SB Admin 2 JavaScript -->
+    <script src="/static/vendor/jquery/jquery.min.js"></script>
+    <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="/static/js/sb-admin-2.min.js"></script>
+
+    <script>
+$(document).ready(function() {
+    $('#formRegistroMascotaModal').on('submit', function(e) {
+        e.preventDefault();  // Evita el envío tradicional del formulario
+
+        var formData = $(this).serialize();  // Serializa los datos del formulario
+
+        $.ajax({
+            url: '/diagnosis/register_pet',  // Endpoint en el servidor Flask
+            type: 'POST',
+            data: formData,  // Datos del formulario serializados
+            success: function(response) {
+                // Cierra el modal de registro de mascota
+                $('#modalRegistroMascota').modal('hide');
+
+                // Dependiendo de la respuesta, muestra el modal de éxito o error
+                if (response.success) {
+                    $('#successModalPet .modal-body').text(response.message);
+                    $('#successModalPet').modal('show');
+
+                    // Espera a que el modal de éxito se cierre antes de recargar la página
+                    $('#successModalPet').on('hidden.bs.modal', function () {
+                        location.reload(); // Recarga la página para actualizar la lista de mascotas
+                    });
+                } else {
+                    $('#errorModal .modal-body').text(response.message);
+                    $('#errorModal').modal('show');
+                }
+            },
+            error: function() {
+                // Maneja errores de la llamada AJAX
+                $('#errorModal .modal-body').text('Hubo un problema al procesar la solicitud.');
+                $('#errorModal').modal('show');
+            }
+        });
+    });
+});
+
+
+    </script>
+
+<script>
+    $(document).ready(function() {
+        $('#botonContinuar').click(function(e) {
+            var seleccion = $('#mascotaSeleccionada').val();
+            if (!seleccion) {
+                e.preventDefault(); // Evita que el formulario se envíe
+    
+                // Establece el mensaje del cuerpo del modal
+                $('#errorModal .modal-body').text('Por favor, selecciona una mascota o registra una nueva.');
+    
+                $('#errorModal').modal('show'); // Muestra el modal de error
+            }
+        });
+    });
+    </script>
+    
+
+</body>
+</html>
